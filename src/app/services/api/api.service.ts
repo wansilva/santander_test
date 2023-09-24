@@ -10,11 +10,23 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getExternal(data: { url: string, headers: HttpHeaders }): Observable<any> {
-    return this.http.get(data.url, { headers: data.headers });
+  getExternal(params: string, headers?: HttpHeaders): Observable<any> {
+    return this.http.get(params, { headers: headers });
   }
 
-  getData(data: { url: string, headers: HttpHeaders }): Observable<any> {
-    return this.http.get(`${this.server}/${data.url}`, { headers: data.headers });
+  getData(params: string, headers?: HttpHeaders): Observable<any> {
+    return this.http.get(`${this.server}/${params}`, { headers: headers });
+  }
+
+  postData(params: string, payload: any, headers?: HttpHeaders): Observable<any> {
+    return this.http.post(`${this.server}/${params}`, payload, { headers: headers });
+  }
+
+  putData(params: string, payload: any, headers?: HttpHeaders): Observable<any> {
+    return this.http.post(`${this.server}/${params}`, payload, { headers: headers });
+  }
+
+  delData(params: string, headers?: HttpHeaders): Observable<any> {
+    return this.http.get(`${this.server}/${params}`, { headers: headers });
   }
 }

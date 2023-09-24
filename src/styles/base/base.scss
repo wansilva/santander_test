@@ -1,0 +1,29 @@
+.no-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.shadow {
+  box-shadow: 2px 3px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style-type: none;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+button {
+  font-size: 1rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

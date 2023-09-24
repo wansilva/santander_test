@@ -1,0 +1,39 @@
+.btn {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+}
+
+.btn.primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn.primary:active {
+    background: var(--primary-active);
+}
+
+.btn.secondary:hover {
+    background: var(--secondary-hover);
+}
+
+.btn.secondary:active {
+    background: var(--secondary-active);
+}
+
+.btn-sm {
+    height: 1.75rem;
+}
+
+.btn-md {
+    height: 2.25rem;
+    padding-inline: 0.75rem;
+}
+
+.btn-lg {
+    height: 3rem;
+    padding-inline: 1rem;
+}

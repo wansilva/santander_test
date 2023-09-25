@@ -1,0 +1,16 @@
+<div class="paginate-component">
+    <div class="view">
+        Exibindo <strong>{{ (page + 1) * limit }}</strong> de <strong>{{ total }}</strong>
+    </div>
+    <div class="pages no-select">
+        <button (click)="previousPage()"><</button>
+        <button *ngIf="page >= 5" class="btn page" (click)="changePage(1)">1</button>
+        <div *ngIf="page >= 5" class="page empty">...</div>
+        <ng-container *ngFor="let pg of getPages()">
+            <button [class.active]="pg === page + 1" class="btn page" (click)="changePage(pg)">
+                {{ pg }}
+            </button>
+        </ng-container>
+        <button *ngIf="checkFinalPage()" (click)="nextPage()">></button>
+    </div>
+</div>

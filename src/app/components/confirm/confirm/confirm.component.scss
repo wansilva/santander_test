@@ -1,0 +1,39 @@
+.confirmation-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--black-opacity);
+
+    .confirm-content {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        padding-block: 1rem;
+        padding-inline: 1.5rem;
+        border-radius: 0.5rem;
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding-block-end: 1rem;
+        }
+
+        .message {
+            font-size: 1rem;
+            text-align: start;
+            padding-block-end: 1rem;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+    }
+}

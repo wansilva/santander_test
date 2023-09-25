@@ -1,0 +1,14 @@
+<div *ngIf="show" class="confirmation-dialog">
+    <div class="confirm-content shadow">
+        <div *ngIf="title" class="title">{{ title }}</div>
+        <div *ngIf="message" class="message" [innerHTML]="message"></div>
+        <div class="actions">
+            <button class="btn btn-md default " (click)="canceled()">
+                {{ buttonCancel }}
+            </button>
+            <button class="btn primary btn-md" (click)="confirmed()">
+                {{ buttonConfirm }}
+            </button>
+        </div>
+    </div>
+</div>

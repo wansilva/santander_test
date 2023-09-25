@@ -1,0 +1,27 @@
+.users-page {
+    display: flex;
+    flex-direction: column;
+    padding-block-end: 2rem;
+
+    header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-block-end: 1px solid var(--gray-border);
+        padding-block: 0.5rem;
+        padding-inline: 1rem;
+
+        .title {
+            display: flex;
+            flex: 1;
+            justify-content: flex-start;
+        }
+    }
+}
+
+.list-users {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}

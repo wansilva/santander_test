@@ -1,0 +1,29 @@
+<section class="user-add-page">
+    <header>
+        <div class="back">
+            <button type="button" (click)="goToBack()" class="btn btn-sm" title="Voltar">
+                <img [src]="iconBack" alt="Voltar para lista de usuários">
+            </button>
+        </div>
+        <div class="title">
+            <h3>ADICIONAR USUÁRIO</h3>
+        </div>
+    </header>
+    <section class="content">
+        <div class="user-avatar">
+            <div class="box-avatar">
+                <div class="avatar">
+                    <img *ngIf="picture" [src]="picture" alt="Imagem do usuário" />
+                    <img *ngIf="!picture" [src]="iconNoImage" />
+                </div>
+            </div>
+        </div>
+        <div class="user-form">
+            <user-form-component
+                (submited)="saveUser($event)"
+                (changePicture)="changePicture($event)"
+            />
+        </div>
+    </section>
+</section>
+<loading-component [show]="loadingPage" />

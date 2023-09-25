@@ -1,0 +1,44 @@
+<section class="login-page">
+    <div class="box-login shadow">
+        <div class="box-login__left">
+            <img [src]=imageLogotipo alt="logo santander" />
+            <img [src]=imageWansilva alt="logo Wanderson Silva" />
+        </div>
+        <div class="box-login__right">
+            <div class="title">{{ title }}</div>
+            <form [formGroup]="loginForm" (ngSubmit)="sendLogin()">
+                <div class="form-group">
+                    <label for="login">Login</label>
+                    <div class="form-item">
+                        <input type="text" id="login" formControlName="login">
+                        <div class="sufix">
+                            <img [src]="iconPerson" aria-hidden="true" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <div class="form-item">
+                        <input id="password" formControlName="password" [type]="typePassword">
+                        <div class="sufix" (click)="togglePassword()">
+                            <button *ngIf="typePassword === 'password'" type="button" class="btn" alt="Mostrar Senha">
+                                <img [src]="iconLockClosed" aria-hidden="true" />
+                            </button>
+                            <button *ngIf="typePassword === 'text'" type="button" class="btn" alt="Esconder Senha">
+                                <img [src]="iconLockOpen" aria-hidden="true" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn btn-lg primary">
+                        Entrar
+                    </button>
+                    <button type="button" class="btn">
+                        Recuperar senha!
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,94 @@
+<section *ngIf="!loadingPage" class="users-page">
+    <header>
+        <div class="title">
+            <h3>USUÁRIO CADASTRADOS</h3>
+        </div>
+        <div class="actions">
+            <button
+                type="button"
+                class="btn btn-md primary"
+                title="Adicionar Usuário"
+                (click)="goToAdd()"
+            >
+                <img [src]="iconAdd" alt="Adicionar Usuário">
+                Adicionar usuário
+            </button>
+        </div>
+    </header>
+    <section class="list-users">
+        <table class="table-list">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th class="td-options">Opções</th>
+            </tr>
+            <ng-container *ngIf="!loading">
+                <ng-container *ngFor="let item of list; let i = index">
+                    <tr [class]="{ striped: isOdd(i) }">
+                        <td class="td-image">
+                            <div *ngIf="item.picture" class="image">
+                                <img [src]="item.picture" alt="Foto de {{ item.firstName }}" />
+                            </div>
+                        </td>
+                        <td>
+                            <span *ngIf="item.title">
+                                {{ item.title }}
+                            </span>
+                            <span *ngIf="item.firstName">
+                                {{ item.firstName }}
+                            </span>
+                            <span *ngIf="item.lastName">
+                                {{ item.lastName }}
+                            </span>
+                        </td>
+                        <td class="td-options">
+                            <div class="options">
+                                <button
+                                    type="button"
+                                    class="btn"
+                                    title="Ver {{ item.firstName }}"
+                                    (click)="showUser(item.id)"
+                                >
+                                    <img [src]="iconView" alt="Ver {{ item.firstName }}" />
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn"
+                                    title="Editar {{ item.firstName }}"
+                                    (click)="editUser(item.id)"
+                                >
+                                    <img [src]="iconEdit" alt="Editar {{ item.firstName }}" />
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn"
+                                    title="Remover {{ item.firstName }}"
+                                    (click)="changeUserToDelete(item.id)"
+                                >
+                                    <img [src]="iconTrash" alt="Remover {{ item.firstName }}" />
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="loading">
+                <tr>
+                    <td colspan="3">
+                        <div class="loading">
+                            <img [src]="imageLoading" aria-hidden="true" />
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+        <pagination-component [total]="listTotal" [limit]="limit" [page]="page" (change)="changePage($event)" />
+    </section>
+    <confirm-dialog
+        [show]="selectedUserToDelete != null"
+        [message]="messageDeleteUser"
+        (confirm)="confirmDeleteUser()"
+        (cancel)="cancelDeleteUser()"
+    />
+</section>
+<loading-component [show]="loadingPage" />

@@ -1,0 +1,41 @@
+.paginate-component {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-block: 1rem;
+    padding-inline: 1rem;
+    border: 1px solid var(--gray-border);
+
+    .view {
+        font-size: 1rem;
+    }
+
+    .pages {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+
+        .page,
+        button {
+            cursor: pointer;
+            width: 2rem;
+            padding-block: 0.25rem;
+            border: 1px solid var(--gray-border);
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .page.empty {
+            cursor: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: none;
+        }
+
+        .page.active {
+            background: var(--black-full);
+            color: var(--white-full);
+        }
+    }
+}

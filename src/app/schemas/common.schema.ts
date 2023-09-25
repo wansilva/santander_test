@@ -1,4 +1,9 @@
-import { UserPreviewSchema } from "./user.schema"
+import { UserPreviewSchema } from "./user.schema";
+
+export interface TableValuesSchema {
+    key: string
+    values: string | number [] | null
+}
 
 export interface ListUsersSchema {
     data: UserPreviewSchema[]

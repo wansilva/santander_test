@@ -1,0 +1,23 @@
+.users-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-users {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.loading {
+    display: flex;
+    width: inherit;
+    padding-block: 2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 3rem;
+    }
+}

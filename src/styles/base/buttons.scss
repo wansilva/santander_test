@@ -8,6 +8,15 @@
     background: transparent;
 }
 
+.btn.default {
+    background: var(--gray-border);
+}
+
+.btn.primary {
+    background: var(--primary);
+    color: var(--primary-text);
+}
+
 .btn.primary:hover {
     background: var(--primary-hover);
 }

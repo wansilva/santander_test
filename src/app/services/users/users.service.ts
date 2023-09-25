@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 
 import { ApiService } from 'src/app/services/api/api.service';
 import { ListUsersSchema } from 'src/app/schemas/common.schema';
@@ -17,11 +16,12 @@ export class UsersService {
     "app-id": this.token,
   });
 
-  constructor(private api: ApiService, private toast: ToastrService) {}
+  constructor(private api: ApiService) {}
 
-  fetchUsers(): Observable<ListUsersSchema> {
-    this.toast.error('Mensagem de erro!', 'Título');
-    return this.api.getData("user", this.headers);
+  fetchUsers(page?: number, limit?: number): Observable<ListUsersSchema> {
+    page = page ? page : 0;
+    limit = limit ? limit : 20;
+    return this.api.getData(`user?page=${page}&limit=${limit}`, this.headers);
   }
 
   fetchUserById(user_id: string): Observable<any> {

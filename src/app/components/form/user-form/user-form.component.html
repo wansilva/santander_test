@@ -1,0 +1,12 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label>Title:</label>
+        <input type="text" formControlName="title">
+    </div>
+    <div>
+        <label>First Name:</label>
+        <input type="text" formControlName="firstName">
+    </div>
+    <!-- Adicione os outros campos aqui -->
+    <button type="submit">Submit</button>
+</form>

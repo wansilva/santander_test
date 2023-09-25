@@ -13,13 +13,23 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UsersComponent } from './pages/users/list/users.component';
+import { UserComponent } from './pages/users/user/user.component';
+import { PaginationComponent } from './components/pagination/pagination/pagination.component';
+import { UserAddComponent } from './pages/users/user-add/user-add.component';
+import { UserFormComponent } from './components/form/user-form/user-form.component';
+import { ConfirmComponent } from './components/confirm/confirm/confirm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    UserComponent,
+    PaginationComponent,
+    UserAddComponent,
+    UserFormComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,

@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   sendLogin() {
     if (this.loginForm.valid) {
-      this.router.navigate(["/home"]);
+      this.router.navigate(["/users"]);
     } else {
     }
   }

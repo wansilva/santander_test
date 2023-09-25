@@ -33,3 +33,27 @@ Formulário de criação de usuário.
 **Atualização de dados de usuário:**
 Formulário de atualização de dados do usuário pelo ID disponibilizado na lista.
 Toda vez que editar os inputs, salvar o formulário, se preocupar com quantidade de requisições para evitar sobre carga do servidor.
+
+**Instalação do projeto:**
+```
+npm install
+```
+
+**Iniciando o projeto:**
+```
+npm start 
+```
+
+**Fazendo a Build:**
+```
+npm run build
+```
+
+**Considerações finais**
+Procurei não utilizar coisas prontas (Tailwind, bootstrap, jQuery, etc), fazendo todo o css, script e configuração do projeto do zero para poderem avaliar se tenho ou não domínio.
+Tentei fazer um login, porém como demandou muito tempo partir do zero, fiz apenas a tela de login.
+Basta preecher o login (min: 2 char) e password (min: 8 char) e clicar no botão **Entrar** para ser direcionado para página de usuários.
+Criei um componente de formulário no qual pude aproveitar no create e edit do usuário.
+Criei também um componente de paginação.
+Pensei em fazer um campo para busca e ordenação na lista de usuários, porém a API não suporta tal, ficando inviável para o teste.
+Como não tinha um layout para seguir, fiz algo bem básico, focando no enunciado acima.

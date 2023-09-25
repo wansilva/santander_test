@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsersComponent implements OnInit {
   loading = true;
+  loadingPage = true;
   list: UserPreviewSchema[] = [];
   listTotal: number = 0;
   limit: number = 10;
@@ -20,11 +21,12 @@ export class UsersComponent implements OnInit {
   pages: number = 1;
 
   iconView = "assets/icons/black/eye-open.png";
+  iconEdit = "assets/icons/black/edit.png";
   iconTrash = "assets/icons/black/trash.png";
+  iconAdd = "assets/icons/white/add.png";
 
   imageLoading = "assets/images/loading.gif";
 
-  showDialogDeleteUser = true;
   selectedUserToDelete: string | null = null;
   messageDeleteUser: string = "";
 
@@ -45,7 +47,7 @@ export class UsersComponent implements OnInit {
         this.list = result.data;
         this.listTotal = result.total;
         this.loading = false;
-        console.log("result", result);
+        this.loadingPage = false;
       });
     } catch (error) {
       this.loading = false;
@@ -64,6 +66,10 @@ export class UsersComponent implements OnInit {
     this.router.navigate(["users", id]);
   }
 
+  editUser(id: string) {
+    this.router.navigate(["users", "edit", id]);
+  }
+
   isOdd(index: number): boolean {
     return index % 2 !== 0;
   }
@@ -72,22 +78,19 @@ export class UsersComponent implements OnInit {
     const [ user ] = this.list.filter((item) => item.id === id);
     const name = user ? `${user.firstName} ${user.lastName}` : "";
 
-    console.log("id", id);
-    console.log("user", user);
-
     this.selectedUserToDelete = id;
-    this.messageDeleteUser = `Remover o usuário ${name}`;
-    this.showDialogDeleteUser = true;
+    this.messageDeleteUser = `Remover o usuário <strong>${name}</strong>`;
   }
 
   async confirmDeleteUser() {
-    this.showDialogDeleteUser = false;
+    this.loadingPage = true;
     if (this.selectedUserToDelete) {
       this.userService.deleteUser(this.selectedUserToDelete)
         .subscribe((result) => {
           console.log("result", result);
           this.cancelDeleteUser();
           this.fetchUsers();
+          this.loadingPage = false;
         });
     }
   }
@@ -95,6 +98,5 @@ export class UsersComponent implements OnInit {
   cancelDeleteUser() {
     this.selectedUserToDelete = null;
     this.messageDeleteUser = "";
-    this.showDialogDeleteUser = false;
   }
 }

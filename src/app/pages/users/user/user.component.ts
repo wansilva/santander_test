@@ -25,7 +25,6 @@ export class UserComponent implements OnInit {
   async ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('id');
-      console.log('ID do usuário:', this.userId);
     });
 
     await this.fetchUser();
@@ -33,6 +32,10 @@ export class UserComponent implements OnInit {
 
   goToBack(): void {
     this.router.navigate(["users"]);
+  }
+
+  goToAdd(): void {
+    this.router.navigate(["users/add"]);
   }
 
   async fetchUser() {

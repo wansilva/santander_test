@@ -27,3 +27,17 @@ button {
 .cursor-pointer {
   cursor: pointer;
 }
+
+
+.loading {
+  display: flex;
+  width: inherit;
+  padding-block: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  img {
+      width: 3rem;
+  }
+}

@@ -1,6 +1,16 @@
-<section class="users-page">
-    <div class="list-users">
-        <h3>Usuários Cadastrados</h3>
+<section *ngIf="!loadingPage" class="users-page">
+    <header>
+        <div class="title">
+            <h3>USUÁRIO CADASTRADOS</h3>
+        </div>
+        <div class="actions">
+            <button type="button" class="btn btn-md primary" title="Adicionar Usuário">
+                <img [src]="iconAdd" alt="Adicionar Usuário">
+                Adicionar usuário
+            </button>
+        </div>
+    </header>
+    <section class="list-users">
         <table class="table-list">
             <tr>
                 <th></th>
@@ -39,6 +49,14 @@
                                 <button
                                     type="button"
                                     class="btn"
+                                    title="Editar {{ item.firstName }}"
+                                    (click)="editUser(item.id)"
+                                >
+                                    <img [src]="iconEdit" alt="Editar {{ item.firstName }}" />
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn"
                                     title="Remover {{ item.firstName }}"
                                     (click)="changeUserToDelete(item.id)"
                                 >
@@ -60,11 +78,12 @@
             </ng-container>
         </table>
         <pagination-component [total]="listTotal" [limit]="limit" [page]="page" (change)="changePage($event)" />
-    </div>
+    </section>
     <confirm-dialog
-        *ngIf="showDialogDeleteUser"
+        [show]="selectedUserToDelete != null"
         [message]="messageDeleteUser"
         (confirm)="confirmDeleteUser()"
         (cancel)="cancelDeleteUser()"
     />
 </section>
+<loading-component [show]="loadingPage" />

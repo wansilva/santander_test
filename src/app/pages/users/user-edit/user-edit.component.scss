@@ -1,0 +1,55 @@
+.user-edit-page {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 2rem;
+
+    header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-block-end: 1px solid var(--gray-border);
+
+        .back {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 2rem;
+            }
+        }
+
+        .title {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+    }
+
+    .content {
+        display: grid;
+        grid-template-columns: 25% auto;
+        gap: 3rem;
+
+        .user-avatar {
+            padding-block: 3rem;
+
+            .box-avatar {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid var(--gray-border);
+
+                .avatar {
+                    padding: 1rem;
+                }
+            }
+
+        }
+    
+        .user-form {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

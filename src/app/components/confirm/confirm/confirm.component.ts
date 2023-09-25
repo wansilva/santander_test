@@ -6,6 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./confirm.component.scss']
 })
 export class ConfirmComponent {
+  @Input() show: boolean = false;
   @Input() title: string = 'Antenção';
   @Input() message: string = 'Tem certeza desta ação?';
   @Input() buttonConfirm: string = 'Confirmar';

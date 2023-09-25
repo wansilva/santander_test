@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { ApiService } from './services/api/api.service';
 import { UsersService } from './services/users/users.service';
@@ -18,6 +19,8 @@ import { PaginationComponent } from './components/pagination/pagination/paginati
 import { UserAddComponent } from './pages/users/user-add/user-add.component';
 import { UserFormComponent } from './components/form/user-form/user-form.component';
 import { ConfirmComponent } from './components/confirm/confirm/confirm.component';
+import { LoadingComponent } from './components/loading/loading/loading.component';
+import { UserEditComponent } from './pages/users/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { ConfirmComponent } from './components/confirm/confirm/confirm.component
     UserAddComponent,
     UserFormComponent,
     ConfirmComponent,
+    LoadingComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +43,7 @@ import { ConfirmComponent } from './components/confirm/confirm/confirm.component
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    TextMaskModule,
   ],
   providers: [
     ApiService,

@@ -11,12 +11,13 @@ export interface UserPreviewSchema {
 export interface UserSchema {
     id: string
     title: "mr" | "ms" | "mrs" | "miss" | "dir" | ""
-    firstName: string // 2-50
-    lastName: string // 2-50
+    firstName: string
+    lastName: string
     gender: "male" | "female" | "other" | ""
     email: string
     dateOfBirth: string
     registerDate: string
+    updatedDate?: string
     phone: string
     picture: string
     location: LocationSchema

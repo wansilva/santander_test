@@ -23,10 +23,10 @@ export class ApiService {
   }
 
   putData(params: string, payload: any, headers?: HttpHeaders): Observable<any> {
-    return this.http.post(`${this.server}/${params}`, payload, { headers: headers });
+    return this.http.put(`${this.server}/${params}`, payload, { headers: headers });
   }
 
   delData(params: string, headers?: HttpHeaders): Observable<any> {
-    return this.http.get(`${this.server}/${params}`, { headers: headers });
+    return this.http.delete(`${this.server}/${params}`, { headers: headers });
   }
 }

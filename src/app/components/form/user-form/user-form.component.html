@@ -1,12 +1,117 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div>
-        <label>Title:</label>
-        <input type="text" formControlName="title">
+<form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h3>Dados Pessoais</h3>
+    
+    <div class="form-group">
+        <label for="picture">Avatar *</label>
+        <div class="form-item">
+            <input
+                type="text"
+                id="picture"
+                formControlName="picture"
+                placeholder="Ex: https://www.dominio.com/avatar.jpg"
+            >
+        </div>
     </div>
-    <div>
-        <label>First Name:</label>
-        <input type="text" formControlName="firstName">
+    <div class="group-row">
+        <div class="form-group">
+            <label for="title">Título</label>
+            <div class="form-item">
+                <select id="title" formControlName="title">
+                    <option value="">Prefiro não dizer</option>
+                    <option value="mr">Sr.</option>
+                    <option value="ms">Sra</option>
+                    <option value="mrs">Sra. (casada)</option>
+                    <option value="miss">Srta.</option>
+                    <option value="dr">Dr.</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstName">Nome *</label>
+            <div class="form-item">
+                <input type="text" id="firstName" formControlName="firstName">
+            </div>
+        </div>
+        <div class="form-group full">
+            <label for="lastName">Sobrenome *</label>
+            <div class="form-item">
+                <input type="text" id="lastName" formControlName="lastName">
+            </div>
+        </div>
     </div>
-    <!-- Adicione os outros campos aqui -->
-    <button type="submit">Submit</button>
+    <div class="group-row">
+        <div class="form-group">
+            <label for="dateOfBirth">Nascimento *</label>
+            <div class="form-item">
+                <input type="text" id="dateOfBirth" formControlName="dateOfBirth" mask="00/00/0000">
+            </div>
+        </div>
+        <div class="form-group full">
+            <label for="gender">Sexo</label>
+            <div class="form-item">
+                <select id="gender" formControlName="gender">
+                    <option value="">Prefiro não dizer</option>
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                    <option value="other">Outros</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="group-row">
+        <div class="form-group">
+            <label for="phone">Telefone *</label>
+            <div class="form-item">
+                <input type="text" id="phone" formControlName="phone" mask="(00) 0 0000-0000">
+            </div>
+        </div>
+        <div class="form-group full">
+            <label for="email">E-mail *</label>
+            <div class="form-item">
+                <input type="email" id="email" formControlName="email" required>
+            </div>
+        </div>
+    </div>
+    <h3>Endereço</h3>
+    <div class="form-group">
+        <label for="street">Endereço *</label>
+        <div formGroupName="location" class="form-item">
+            <input type="text" id="street" formControlName="street" required>
+        </div>
+    </div>
+    <div class="form-group full">
+        <label for="city">Cidade *</label>
+        <div formGroupName="location" class="form-item">
+            <input type="text" id="city" formControlName="city" required>
+        </div>
+    </div>
+    <div class="group-row">
+        <div class="form-group">
+            <label for="state">Estado *</label>
+            <div formGroupName="location" class="form-item">
+                <input type="text" id="state" formControlName="state" required>
+            </div>
+        </div>
+        <div class="form-group full">
+            <label for="country">País *</label>
+            <div formGroupName="location" class="form-item">
+                <select id="country" formControlName="country" required>
+                    <ng-container *ngFor="let item of countrys; let i = index">
+                        <option [value]="item.name">{{item.name}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-lg primary">
+            {{ buttonSave }}
+        </button>
+        <button *ngIf="showButtonRestore" type="button" class="btn btn-lg default">
+            {{ buttonRestore }}
+        </button>
+        <button *ngIf="showButtonClean" type="reset" class="btn btn-lg default">
+            Limpar Formulário
+        </button>
+    </div>
 </form>

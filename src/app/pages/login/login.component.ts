@@ -40,8 +40,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.router.navigate(["/home"]);
     } else {
-      // O formulário não é válido, trate os erros ou não envie
-      console.log('Formulário inválido');
     }
   }
 }

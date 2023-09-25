@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { UsersService } from 'src/app/services/users/users.service';
 import { ListUsersSchema } from 'src/app/schemas/common.schema';
-import { UserPreviewSchema } from 'src/app/schemas/user.schema';
+import { UserPreviewSchema, UserTitlesEnum } from 'src/app/schemas/user.schema';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -44,25 +44,27 @@ export class UsersComponent implements OnInit {
     try {
       this.userService.fetchUsers(this.page, this.limit)
       ?.subscribe((result: ListUsersSchema) => {
-        this.list = result.data;
+        this.list = result.data.map(item => {
+          item.title = UserTitlesEnum[item.title as never];
+          return item;
+        });
         this.listTotal = result.total;
         this.loading = false;
       });
     } catch (error) {
       this.loading = false;
-      this.toast.error("Ops!", "Não foi possível carrerar a lista")
+      this.toast.error("Não foi possível carrerar a lista")
     }
   }
 
   async changePage(page: number) {
     this.page = page;
-    console.log("page", page);
     this.loading = true;
     await this.fetchUsers();
   }
 
   showUser(id: string) {
-    this.router.navigate(["users", id]);
+    this.router.navigate(["users", "id", id]);
   }
 
   editUser(id: string) {
@@ -86,7 +88,6 @@ export class UsersComponent implements OnInit {
     if (this.selectedUserToDelete) {
       this.userService.deleteUser(this.selectedUserToDelete)
         .subscribe((result) => {
-          console.log("result", result);
           this.cancelDeleteUser();
           this.fetchUsers();
           this.loadingPage = false;

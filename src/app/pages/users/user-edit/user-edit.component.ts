@@ -45,7 +45,6 @@ export class UserEditComponent implements OnInit {
         ?.subscribe((result: UserSchema) => {
           this.user = result;
           this.picture = result.picture;
-          console.log("result", result);
           this.loading = false;
         });
       } else {
@@ -77,10 +76,8 @@ export class UserEditComponent implements OnInit {
       }
   
       if (this.userId) {
-        console.log("user")
         this.userService.updateUser(this.userId, payload)
-          .subscribe((result) => {
-            console.log("result", result);
+          .subscribe(() => {
             this.fetchUser();
             this.loadingPage = false;
             this.toast.success("As alterações foram salvas!");

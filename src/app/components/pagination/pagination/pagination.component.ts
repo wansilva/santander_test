@@ -22,7 +22,6 @@ export class PaginationComponent {
       this.page -= 1;
       this.change.emit(this.page);
     }
-    console.log("previousPage", this.page)
   }
 
   nextPage(): void {

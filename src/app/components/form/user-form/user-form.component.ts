@@ -64,24 +64,6 @@ export class UserFormComponent implements OnChanges {
     }
   }
 
-  formatDate(date: string, iso= false) {
-    if (!date)
-      return "";
-
-    const newDate = new Date(date);
-
-    const day = newDate.getDate().toString().padStart(2, '0');
-    const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
-    const year = (newDate.getFullYear()).toString();
-    const hour = newDate.getHours().toString().padStart(2, '0');
-    const min = newDate.getMinutes().toString().padStart(2, '0');
-    const sec = newDate.getSeconds().toString().padStart(2, '0');
-
-    return iso 
-      ? `${year}-${month}-${day}T${hour}:${min}:${sec}.000Z`
-      : `${day}/${month}/${year}`;
-  }
-
   fetchUser() {
     if (this.payload) {
       const birthDay = this.dates.formDate(this.payload.dateOfBirth);      
@@ -161,18 +143,14 @@ export class UserFormComponent implements OnChanges {
 
     let listErrors: string[] = keys;
 
-    console.log("listErrors", listErrors)
     keys.forEach((key) => {
       const control = this.userForm.get(key);
       if (control) {
-        console.log(key, control.valid);
         if (control.valid) {
           this.removeError(key);
         }
       }
     });
-
-    console.log("listErrors", listErrors)
     
     setTimeout(() => {
       this.listErrors = listErrors;
@@ -186,7 +164,7 @@ export class UserFormComponent implements OnChanges {
     if (control) {
       const [ country ] = this.countrys.filter(item => item.name === control.value);
       this.timezone = country.timezone;
-      console.log("timezone", this.timezone);
+      this.userForm.get("location.timezone")?.setValue(this.timezone);
     }
   }
 
@@ -226,15 +204,10 @@ export class UserFormComponent implements OnChanges {
       }
     };
 
-    if (!this.userForm.errors) {
+    if (this.userForm.valid) {
       this.submited.emit(payload);
     } else {
       this.checkForm();
     }
-    console.log("timezone", this.timezone);
-    console.log("valid", this.userForm.valid);
-    console.log("userForm", this.userForm);
-    console.log("errors", this.userForm.errors);
-    console.log("form", payload);
   }
 }

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UsersService } from 'src/app/services/users/users.service';
-import { UserPreviewSchema } from 'src/app/schemas/user.schema';
+import { UserSchema, UserGenderEnum, UserTitlesEnum } from 'src/app/schemas/user.schema';
 import { ToastrService } from 'ngx-toastr';
+import { DatesService } from 'src/app/utils/dates/dates.service';
 
 @Component({
   selector: 'app-user',
@@ -12,14 +13,22 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserComponent implements OnInit {
   userId: string | null = null;
-  user: UserPreviewSchema | null = null;
+  user: UserSchema | null = null;
   loading: boolean = true;
+  loadingPage: boolean = false;
+
+  picture: string = "";
+
+  iconNoImage = "assets/icons/black/no-image.png";
+  iconBack = "assets/icons/black/arrow-line-left.png";
+  imageLoading = "assets/images/loading.gif";
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private userService: UsersService,
     private toast: ToastrService,
+    private dates: DatesService,
   ) { }
 
   async ngOnInit() {
@@ -42,9 +51,12 @@ export class UserComponent implements OnInit {
     try {
       if (this.userId) {
         this.userService.fetchUserById(this.userId)
-        ?.subscribe((result: UserPreviewSchema) => {
+        ?.subscribe((result: UserSchema) => {
           this.user = result;
-          console.log("result", result);
+          this.picture = result.picture;
+          this.user.dateOfBirth = this.dates.formDate(result.dateOfBirth);
+          this.user.gender = UserGenderEnum[result.gender as never];
+          this.user.title = UserTitlesEnum[result.title as never];
           this.loading = false;
         });
       } else {
@@ -53,7 +65,7 @@ export class UserComponent implements OnInit {
       }
     } catch (error) {
       this.loading = false;
-      this.toast.error("Não foi possível carrerar a lista")
+      this.toast.error("Não foi possível carrerar o usuário")
     }
   }
 }

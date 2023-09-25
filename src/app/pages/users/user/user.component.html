@@ -1,1 +1,73 @@
-<p>user works!</p>
+<section class="user-view-page">
+    <header>
+        <div class="back">
+            <button type="button" (click)="goToBack()" class="btn btn-sm" title="Voltar">
+                <img [src]="iconBack" alt="Voltar para lista de usuários">
+            </button>
+        </div>
+        <div class="title">
+            <h3 *ngIf="user?.firstName">
+                {{ user?.firstName }} {{ user?.lastName }}
+            </h3>
+        </div>
+    </header>
+    <section *ngIf="!loading" class="content">
+        <div class="user-avatar">
+            <div class="box-avatar">
+                <div class="avatar">
+                    <img *ngIf="picture" [src]="picture" alt="Imagem do usuário" />
+                    <img *ngIf="!picture" [src]="iconNoImage" />
+                </div>
+            </div>
+        </div>
+        <div class="user-data">
+            <h3>Dados Pessoais</h3>
+            <div>
+                <strong>Título: </strong> {{ user?.title }}
+            </div>
+            <div class="group-row">
+                <div>
+                    <strong>Nome: </strong> {{ user?.firstName }}
+                </div>
+                <div>
+                    <strong>Sobrenome: </strong> {{ user?.lastName }}
+                </div>
+            </div>
+            <div class="group-row">
+                <div>
+                    <strong>Nascimento: </strong> {{ user?.dateOfBirth }}
+                </div>
+                <div>
+                    <strong>Sexo: </strong> {{ user?.gender }}
+                </div>
+            </div>
+            <div>
+                <strong>Telefone: </strong> {{ user?.phone }}
+            </div>
+            <div>
+                <strong>E-mail: </strong> {{ user?.email }}
+            </div>
+            <h3>Endereço</h3>
+            <div>
+                <strong>Endereço: </strong> {{ user?.location?.street }}
+            </div>
+            <div>
+                <strong>Cidade: </strong> {{ user?.location?.city }}
+            </div>
+            <div class="group-row">
+                <div>
+                    <strong>Estado: </strong> {{ user?.location?.state }}
+                </div>
+                <div>
+                    <strong>País: </strong> {{ user?.location?.country }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section *ngIf="loading">
+        <div class="loading">
+            <img [src]="imageLoading" aria-hidden="true" />
+        </div>
+    </section>
+</section>
+<loading-component [show]="loadingPage" />

@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { TextMaskModule } from 'angular2-text-mask';
 
 import { ApiService } from './services/api/api.service';
 import { UsersService } from './services/users/users.service';
@@ -43,7 +42,6 @@ import { UserEditComponent } from './pages/users/user-edit/user-edit.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    TextMaskModule,
   ],
   providers: [
     ApiService,

@@ -37,18 +37,24 @@ export class UserAddComponent {
 
   async saveUser(form: UserSchema) {
     this.loadingPage = true;
-    const now = new Date();
-    const payload: UserSchema = {
-      ...form,
-      registerDate: now.toISOString(),
-    };
 
-    this.userService.createUser(payload)
-    .subscribe((result) => {
-      console.log("result", result);
+    try {
+      const now = new Date();
+      const payload: UserSchema = {
+        ...form,
+        registerDate: now.toISOString(),
+      };
+  
+      this.userService.createUser(payload)
+      .subscribe((result) => {
+        this.loadingPage = false;
+        this.toast.success("Usuário cadastrado!")
+        this.goToBack();
+      });
+    } catch (_) {
       this.loadingPage = false;
-      this.goToBack();
-    });
+      this.toast.error("Não foi possível cadastrar o usuário")
+    }
   }
 
   goToBack(): void {

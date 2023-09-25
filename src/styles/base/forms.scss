@@ -50,3 +50,9 @@
         color: var(--red);
     }
 }
+
+.form-group.error {
+    .form-item {
+        border-color: var(--red);
+    }
+}

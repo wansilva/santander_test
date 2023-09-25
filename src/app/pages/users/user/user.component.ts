@@ -48,12 +48,12 @@ export class UserComponent implements OnInit {
           this.loading = false;
         });
       } else {
-        this.toast.error("Ops!", "ID de usuário não encontrado")
+        this.toast.error("ID de usuário não encontrado")
           .onHidden.subscribe(() => this.goToBack()); 
       }
     } catch (error) {
       this.loading = false;
-      this.toast.error("Ops!", "Não foi possível carrerar a lista")
+      this.toast.error("Não foi possível carrerar a lista")
     }
   }
 }

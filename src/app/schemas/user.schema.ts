@@ -9,14 +9,14 @@ export interface UserPreviewSchema {
 }
 
 export interface UserSchema {
-    id: string
+    id?: string
     title: "mr" | "ms" | "mrs" | "miss" | "dir" | ""
     firstName: string
     lastName: string
     gender: "male" | "female" | "other" | ""
     email: string
     dateOfBirth: string
-    registerDate: string
+    registerDate?: string
     updatedDate?: string
     phone: string
     picture: string

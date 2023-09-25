@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter, ChangeDetectorRef  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserSchema } from 'src/app/schemas/user.schema';
 import { CountrysList } from 'src/app/schemas/countrys.enum';
@@ -22,19 +22,21 @@ export class UserFormComponent implements OnChanges {
   @Output() changePicture = new EventEmitter<string>();
 
   userForm: FormGroup;
-  listErros: string[] = [];
+  listErrors: string[] = [];
   countrys = Object.values(CountrysList);
+  loading = false;
+  timezone: string = "";
 
-  constructor(private fb: FormBuilder, private dates: DatesService) {
+  constructor(private fb: FormBuilder, private dates: DatesService, private cdr: ChangeDetectorRef) {
     this.userForm = this.fb.group({
-      title: ['', Validators.required],
+      title: ['', [Validators.required]],
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      gender: ['', Validators.required],
+      gender: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       dateOfBirth: ['', [Validators.required, this.dateOfBirthValidator]],
       phone: ['', [Validators.required, this.phoneValidator]],
-      picture: ['', Validators.pattern('(http|https)://.+')],
+      picture: ['', [Validators.required, Validators.pattern('(http|https)://.+')]],
       location: this.fb.group({
         street: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
         city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
@@ -108,27 +110,108 @@ export class UserFormComponent implements OnChanges {
   }
 
   checkMaxLength(key: string, max: number) {
-    const control = this.userForm.get(key);
-    
-    if (control && control.value.length > max) {
-      const errorIndex = this.listErros.findIndex(item => item === key);
-      if (errorIndex < 0)
-        this.listErros.push(key);
-      return true;
-    } else {
-      const errorIndex = this.listErros.findIndex(item => item === key);
-      if (errorIndex >= 0)
-        this.listErros.splice(errorIndex, 1);
+    if (this.loading)
       return false;
+
+    const control = this.userForm.get(key);
+    if (control && control.value.length > max) {
+      const errorIndex = this.listErrors.findIndex(item => item === key);
+      if (errorIndex < 0)
+        this.listErrors.push(key);
+      return true;
     }
+    return false;
   }
 
   checkDifLength(key: string, max: number) {
+    if (this.loading)
+    return "";
+
     if (this.checkMaxLength(key, max)) {
-      const diff = this.userForm.get(key)?.value.length - max;
-      return `Inserido ${diff} acima do limite ${max}`;
+      const control = this.userForm.get(key);
+      if (control) {
+        const diff = control.value.length - max;
+        return `Inserido ${diff} acima do limite ${max}`;
+      }
     }
     return "";
+  }
+
+  removeError(key: string) {
+    const errorIndex = this.listErrors.findIndex(item => item === key);
+    if (errorIndex >= 0)
+      this.listErrors?.splice(errorIndex, 1);
+  }
+
+  checkForm() {
+    const keys = [
+      "firstName",
+      "lastName",
+      "email",
+      "dateOfBirth",
+      "phone",
+      "picture",
+      "location.street",
+      "location.city",
+      "location.state",
+      "location.country",
+    ];
+
+    this.loading = true;
+
+    let listErrors: string[] = keys;
+
+    console.log("listErrors", listErrors)
+    keys.forEach((key) => {
+      const control = this.userForm.get(key);
+      if (control) {
+        console.log(key, control.valid);
+        if (control.valid) {
+          this.removeError(key);
+        }
+      }
+    });
+
+    console.log("listErrors", listErrors)
+    
+    setTimeout(() => {
+      this.listErrors = listErrors;
+      this.loading = false;
+    }, 1000);
+  }
+
+  changeCountry() {
+    const control = this.userForm.get("location.country");
+
+    if (control) {
+      const [ country ] = this.countrys.filter(item => item.name === control.value);
+      this.timezone = country.timezone;
+      console.log("timezone", this.timezone);
+    }
+  }
+
+  maskDate() {
+    this.removeError("dateOfBirth");
+    const control = this.userForm.get("dateOfBirth");
+
+    if (control) {
+      const inputValue = control.value.replace(/\D/g, '').substring(0, 8);
+      const value = inputValue.length < 8
+        ? inputValue : inputValue.replace(/(\d{2})(\d{0,2})(\d{0,4})/, '$1/$2/$3');
+      control.setValue(value);
+    }
+  }
+
+  maskPhone() {
+    this.removeError("phone");
+    const control = this.userForm.get("phone");
+
+    if (control) {
+      const inputValue = control.value.replace(/\D/g, '').substring(0, 11);
+      const value = inputValue.length < 11
+        ? inputValue : inputValue.replace(/(\d{2})(\d{1})(\d{0,4})(\d{0,4})/, '($1) $2 $3-$4');
+      control.setValue(value);
+    }
   }
 
   onSubmit() {
@@ -137,12 +220,21 @@ export class UserFormComponent implements OnChanges {
     const payload = {
       ...formData,
       dateOfBirth: birthDayIso,
+      location: {
+        ...formData.location,
+        timezone: this.timezone,
+      }
     };
 
-    if (this.userForm.valid) {
+    if (!this.userForm.errors) {
       this.submited.emit(payload);
+    } else {
+      this.checkForm();
     }
+    console.log("timezone", this.timezone);
     console.log("valid", this.userForm.valid);
+    console.log("userForm", this.userForm);
+    console.log("errors", this.userForm.errors);
     console.log("form", payload);
   }
 }

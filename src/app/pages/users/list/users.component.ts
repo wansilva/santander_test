@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsersComponent implements OnInit {
   loading = true;
-  loadingPage = true;
+  loadingPage = false;
   list: UserPreviewSchema[] = [];
   listTotal: number = 0;
   limit: number = 10;
@@ -47,7 +47,6 @@ export class UsersComponent implements OnInit {
         this.list = result.data;
         this.listTotal = result.total;
         this.loading = false;
-        this.loadingPage = false;
       });
     } catch (error) {
       this.loading = false;
@@ -98,5 +97,9 @@ export class UsersComponent implements OnInit {
   cancelDeleteUser() {
     this.selectedUserToDelete = null;
     this.messageDeleteUser = "";
+  }
+
+  goToAdd(): void {
+    this.router.navigate(["users/add"]);
   }
 }

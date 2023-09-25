@@ -9,7 +9,7 @@
             <h3>EDITAR USUÁRIO</h3>
         </div>
     </header>
-    <section class="content">
+    <section *ngIf="!loading" class="content">
         <div class="user-avatar">
             <div class="box-avatar">
                 <div class="avatar">
@@ -21,10 +21,21 @@
         <div class="user-form">
             <user-form-component
                 [payload]="user"
+                [buttonSave]="'Salvar Alterações'"
+                [buttonRestore]="'Restaurar original'"
+                [showButtonClean]="false"
+                [showButtonRestore]="true"
                 [disabledEmail]="disabledEmail"
                 (submited)="updateUser($event)"
+                (restored)="restoreUser()"
                 (changePicture)="changePicture($event)"
             />
         </div>
     </section>
+    <section *ngIf="loading">
+        <div class="loading">
+            <img [src]="imageLoading" aria-hidden="true" />
+        </div>
+    </section>
 </section>
+<loading-component [show]="loadingPage" />

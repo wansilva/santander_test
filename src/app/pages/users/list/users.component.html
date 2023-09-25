@@ -4,7 +4,12 @@
             <h3>USUÁRIO CADASTRADOS</h3>
         </div>
         <div class="actions">
-            <button type="button" class="btn btn-md primary" title="Adicionar Usuário">
+            <button
+                type="button"
+                class="btn btn-md primary"
+                title="Adicionar Usuário"
+                (click)="goToAdd()"
+            >
                 <img [src]="iconAdd" alt="Adicionar Usuário">
                 Adicionar usuário
             </button>

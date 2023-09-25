@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-block: 0.5rem;
+    padding-block: 1rem;
     padding-inline: 1rem;
     border: 1px solid var(--gray-border);
 
@@ -15,7 +15,8 @@
         flex-direction: row;
         gap: 0.5rem;
 
-        .page {
+        .page,
+        button {
             cursor: pointer;
             width: 2rem;
             padding-block: 0.25rem;

@@ -14,6 +14,7 @@ export class UserAddComponent {
   userId: string | null = null;
   user: UserSchema | null = null;
   loading: boolean = true;
+  loadingPage: boolean = false;
   disabledEmail: boolean = true;
 
   picture: string = "";
@@ -35,6 +36,7 @@ export class UserAddComponent {
   }
 
   async saveUser(form: UserSchema) {
+    this.loadingPage = true;
     const now = new Date();
     const payload: UserSchema = {
       ...form,
@@ -44,6 +46,7 @@ export class UserAddComponent {
     this.userService.createUser(payload)
     .subscribe((result) => {
       console.log("result", result);
+      this.loadingPage = false;
       this.goToBack();
     });
   }

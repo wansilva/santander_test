@@ -14,12 +14,14 @@ export class UserEditComponent implements OnInit {
   userId: string | null = null;
   user: UserSchema | null = null;
   loading: boolean = true;
+  loadingPage: boolean = false;
   disabledEmail: boolean = true;
 
   picture: string = "";
 
   iconNoImage = "assets/icons/black/no-image.png";
   iconBack = "assets/icons/black/arrow-line-left.png";
+  imageLoading = "assets/images/loading.gif";
 
   constructor(
     private router: Router,
@@ -47,41 +49,52 @@ export class UserEditComponent implements OnInit {
           this.loading = false;
         });
       } else {
-        this.toast.error("Ops!", "ID de usuário não encontrado")
+        this.toast.error("ID de usuário não encontrado")
           .onHidden.subscribe(() => this.goToBack()); 
       }
     } catch (error) {
       this.loading = false;
-      this.toast.error("Ops!", "Não foi possível carrerar a lista")
+      this.toast.error("Não foi possível carrerar a lista")
     }
   }
 
   async updateUser(form: UserSchema) {
-    const now = new Date();
-    const payload: UserSchema = {
-      ...form,
+    try {
+      this.loadingPage = true;
+  
+      const now = new Date();
+      const payload: UserSchema = {
+        ...form,
+      }
+  
+      if (this.userId) {
+        payload.id = this.userId;
+      }
+  
+      if (this.user) {
+        payload.registerDate = this.user.registerDate;
+        payload.updatedDate = now.toISOString();
+      }
+  
+      if (this.userId) {
+        console.log("user")
+        this.userService.updateUser(this.userId, payload)
+          .subscribe((result) => {
+            console.log("result", result);
+            this.fetchUser();
+            this.loadingPage = false;
+            this.toast.success("As alterações foram salvas!");
+          });
+      }
+    } catch (error) {
+      this.loading = false;
+      this.toast.error("Não foi possível salvar as alterações!");
     }
+  }
 
-    if (this.userId) {
-      payload.id = this.userId;
-    }
-
-    if (this.user) {
-      payload.registerDate = this.user.registerDate;
-      payload.updatedDate = now.toISOString();
-    }
-
-    if (this.userId) {
-      console.log("user")
-      this.userService.updateUser(this.userId, payload)
-        .subscribe((result) => {
-          console.log("result", result);
-          this.fetchUser();
-        });
-    }
-
-    console.log("form", form);
-    console.log("payload", payload);
+  restoreUser() {
+    this.loading = true;
+    this.fetchUser();
   }
 
   changePicture(url: string) {

@@ -1,15 +1,11 @@
 <form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <h3>Dados Pessoais</h3>
-    
+
     <div class="form-group">
         <label for="picture">Avatar *</label>
         <div class="form-item">
-            <input
-                type="text"
-                id="picture"
-                formControlName="picture"
-                placeholder="Ex: https://www.dominio.com/avatar.jpg"
-            >
+            <input type="text" id="picture" formControlName="picture"
+                placeholder="Ex: https://www.dominio.com/avatar.jpg">
         </div>
     </div>
     <div class="group-row">
@@ -26,21 +22,24 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group full" [class]="{ 'error': listErros.includes('firstName') }">
             <label for="firstName">Nome *</label>
             <div class="form-item">
                 <input type="text" id="firstName" formControlName="firstName">
             </div>
+            <label *ngIf="checkMaxLength('firstName', 50)" class="error">
+                {{ checkDifLength('firstName', 50) }}
+            </label>
         </div>
-        <div class="form-group full">
-            <label for="lastName">Sobrenome *</label>
-            <div class="form-item">
-                <input type="text" id="lastName" formControlName="lastName">
-            </div>
+    </div>
+    <div class="form-group" [class]="{ 'error': listErros.includes('lastName') }">
+        <label for="lastName">Sobrenome *</label>
+        <div class="form-item">
+            <input type="text" id="lastName" formControlName="lastName">
         </div>
     </div>
     <div class="group-row">
-        <div class="form-group">
+        <div class="form-group" [class]="{ 'error': listErros.includes('dateOfBirth') }">
             <label for="dateOfBirth">Nascimento *</label>
             <div class="form-item">
                 <input type="text" id="dateOfBirth" formControlName="dateOfBirth" mask="00/00/0000">
@@ -59,13 +58,13 @@
         </div>
     </div>
     <div class="group-row">
-        <div class="form-group">
+        <div class="form-group" [class]="{ 'error': listErros.includes('phone') }">
             <label for="phone">Telefone *</label>
             <div class="form-item">
                 <input type="text" id="phone" formControlName="phone" mask="(00) 0 0000-0000">
             </div>
         </div>
-        <div class="form-group full">
+        <div class="form-group full" [class]="{ 'error': listErros.includes('email') }">
             <label for="email">E-mail *</label>
             <div class="form-item">
                 <input type="email" id="email" formControlName="email" required>
@@ -73,26 +72,26 @@
         </div>
     </div>
     <h3>Endereço</h3>
-    <div class="form-group">
+    <div class="form-group" [class]="{ 'error': listErros.includes('street') }">
         <label for="street">Endereço *</label>
         <div formGroupName="location" class="form-item">
             <input type="text" id="street" formControlName="street" required>
         </div>
     </div>
-    <div class="form-group full">
+    <div class="form-group full" [class]="{ 'error': listErros.includes('city') }">
         <label for="city">Cidade *</label>
         <div formGroupName="location" class="form-item">
             <input type="text" id="city" formControlName="city" required>
         </div>
     </div>
     <div class="group-row">
-        <div class="form-group">
+        <div class="form-group" [class]="{ 'error': listErros.includes('state') }">
             <label for="state">Estado *</label>
             <div formGroupName="location" class="form-item">
                 <input type="text" id="state" formControlName="state" required>
             </div>
         </div>
-        <div class="form-group full">
+        <div class="form-group full" [class]="{ 'error': listErros.includes('country') }">
             <label for="country">País *</label>
             <div formGroupName="location" class="form-item">
                 <select id="country" formControlName="country" required>
@@ -107,7 +106,7 @@
         <button type="submit" class="btn btn-lg primary">
             {{ buttonSave }}
         </button>
-        <button *ngIf="showButtonRestore" type="button" class="btn btn-lg default">
+        <button (click)="restoreUser()" *ngIf="showButtonRestore" type="button" class="btn btn-lg default">
             {{ buttonRestore }}
         </button>
         <button *ngIf="showButtonClean" type="reset" class="btn btn-lg default">

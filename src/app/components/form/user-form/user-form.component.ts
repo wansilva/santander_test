@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserSchema } from 'src/app/schemas/user.schema';
 import { CountrysList } from 'src/app/schemas/countrys.enum';
 import { DatesService } from 'src/app/utils/dates/dates.service';
+import { Masks } from 'src/app/utils/masks/masks.service';
 
 @Component({
   selector: 'user-form-component',
@@ -27,7 +28,12 @@ export class UserFormComponent implements OnChanges {
   loading = false;
   timezone: string = "";
 
-  constructor(private fb: FormBuilder, private dates: DatesService, private cdr: ChangeDetectorRef) {
+  constructor(
+    private fb: FormBuilder,
+    private dates: DatesService,
+    private cdr: ChangeDetectorRef,
+    private mask: Masks,
+  ) {
     this.userForm = this.fb.group({
       title: ['', [Validators.required]],
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -174,8 +180,7 @@ export class UserFormComponent implements OnChanges {
 
     if (control) {
       const inputValue = control.value.replace(/\D/g, '').substring(0, 8);
-      const value = inputValue.length < 8
-        ? inputValue : inputValue.replace(/(\d{2})(\d{0,2})(\d{0,4})/, '$1/$2/$3');
+      const value = this.mask.date(inputValue);
       control.setValue(value);
     }
   }
@@ -186,8 +191,7 @@ export class UserFormComponent implements OnChanges {
 
     if (control) {
       const inputValue = control.value.replace(/\D/g, '').substring(0, 11);
-      const value = inputValue.length < 11
-        ? inputValue : inputValue.replace(/(\d{2})(\d{1})(\d{0,4})(\d{0,4})/, '($1) $2 $3-$4');
+      const value = this.mask.phone(inputValue);
       control.setValue(value);
     }
   }

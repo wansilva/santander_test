@@ -48,7 +48,7 @@ export class UserAddComponent {
 
     this.userService.createUser(payload)
     .subscribe({
-      next: (result) => {
+      next: () => {
         this.loadingPage = false;
         this.toast.success("Usuário cadastrado!")
         this.goToBack();

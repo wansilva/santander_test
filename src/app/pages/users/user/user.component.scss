@@ -56,3 +56,23 @@
         }
     }
 }
+
+@media screen and (max-width: 800px) {
+    .user-view-page {
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-block-end: 3rem;
+
+            .user-avatar {
+                padding-block: 0;
+                padding-block-start: 3rem;
+            }
+
+            .user-data {
+                padding-block-start: 0;
+            }
+        }
+    }
+}

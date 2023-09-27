@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UsersService } from 'src/app/services/users/users.service';
+import { ErrorMessages } from 'src/app/utils/errors/error-messages.service';
 import { UserSchema } from 'src/app/schemas/user.schema';
 import { ToastrService } from 'ngx-toastr';
 
@@ -27,6 +28,7 @@ export class UserAddComponent {
     private route: ActivatedRoute,
     private userService: UsersService,
     private toast: ToastrService,
+    private errors: ErrorMessages,
   ) {}
 
   async ngOnInit() {}
@@ -35,26 +37,27 @@ export class UserAddComponent {
     this.picture = url;
   }
 
-  async saveUser(form: UserSchema) {
+  saveUser(form: UserSchema) {
     this.loadingPage = true;
 
-    try {
-      const now = new Date();
-      const payload: UserSchema = {
-        ...form,
-        registerDate: now.toISOString(),
-      };
-  
-      this.userService.createUser(payload)
-      .subscribe((result) => {
+    const now = new Date();
+    const payload: UserSchema = {
+      ...form,
+      registerDate: now.toISOString(),
+    };
+
+    this.userService.createUser(payload)
+    .subscribe({
+      next: (result) => {
         this.loadingPage = false;
         this.toast.success("Usuário cadastrado!")
         this.goToBack();
-      });
-    } catch (_) {
-      this.loadingPage = false;
-      this.toast.error("Não foi possível cadastrar o usuário")
-    }
+      },
+      error: (error) => {
+        this.loadingPage = false;
+        this.toast.error(this.errors.messages(error?.error?.data))
+      }
+    });
   }
 
   goToBack(): void {

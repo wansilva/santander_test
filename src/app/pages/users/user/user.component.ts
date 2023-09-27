@@ -48,24 +48,25 @@ export class UserComponent implements OnInit {
   }
 
   async fetchUser() {
-    try {
-      if (this.userId) {
-        this.userService.fetchUserById(this.userId)
-        ?.subscribe((result: UserSchema) => {
+    if (this.userId) {
+      this.userService.fetchUserById(this.userId)
+      ?.subscribe({
+        next: (result: UserSchema) => {
           this.user = result;
           this.picture = result.picture;
           this.user.dateOfBirth = this.dates.formDate(result.dateOfBirth);
           this.user.gender = UserGenderEnum[result.gender as never];
           this.user.title = UserTitlesEnum[result.title as never];
           this.loading = false;
-        });
-      } else {
-        this.toast.error("ID de usuário não encontrado")
-          .onHidden.subscribe(() => this.goToBack()); 
-      }
-    } catch (error) {
-      this.loading = false;
-      this.toast.error("Não foi possível carrerar o usuário")
+        },
+        error: () => {
+          this.loading = false;
+          this.toast.error("Não foi possível carrerar o usuário")
+        }
+      });
+    } else {
+      this.toast.error("ID de usuário não encontrado")
+        .onHidden.subscribe(() => this.goToBack()); 
     }
   }
 }

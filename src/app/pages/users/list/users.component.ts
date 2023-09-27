@@ -41,20 +41,21 @@ export class UsersComponent implements OnInit {
   }
 
   async fetchUsers() {
-    try {
-      this.userService.fetchUsers(this.page, this.limit)
-      ?.subscribe((result: ListUsersSchema) => {
-        this.list = result.data.map(item => {
-          item.title = UserTitlesEnum[item.title as never];
-          return item;
-        });
-        this.listTotal = result.total;
-        this.loading = false;
+    this.userService.fetchUsers(this.page, this.limit)
+      ?.subscribe({
+        next: (result: ListUsersSchema) => {
+          this.list = result.data.map(item => {
+            item.title = UserTitlesEnum[item.title as never];
+            return item;
+          });
+          this.listTotal = result.total;
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+          this.toast.error("Não foi possível carrerar a lista")
+        }
       });
-    } catch (error) {
-      this.loading = false;
-      this.toast.error("Não foi possível carrerar a lista")
-    }
   }
 
   async changePage(page: number) {
@@ -87,11 +88,18 @@ export class UsersComponent implements OnInit {
     this.loadingPage = true;
     if (this.selectedUserToDelete) {
       this.userService.deleteUser(this.selectedUserToDelete)
-        .subscribe((result) => {
-          this.cancelDeleteUser();
-          this.fetchUsers();
-          this.loadingPage = false;
-        });
+        ?.subscribe({
+          next: async () => {
+            this.cancelDeleteUser();
+            this.fetchUsers().then(() => {
+              this.loadingPage = false;
+            });
+          },
+          error: () => {
+            this.loadingPage = false;
+            this.toast.error("Erro ao remover o usuário, tente novamente!");
+          }
+        })
     }
   }
 

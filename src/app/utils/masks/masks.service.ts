@@ -23,16 +23,10 @@ export class Masks {
     data = data.replace(/\D/g, '');
     data = data.replace(/^(\d)/, '($1');
     data = data.replace(/(.{3})(\d)/, '$1) $2');
-    if (data.length == 9) {
-      data = data.replace(/(.{1})$/, '-$1');
-    } else if (data.length == 10) {
-      data = data.replace(/(.{2})$/, '-$1');
-    } else if (data.length == 11) {
-      data = data.replace(/(.{3})$/, '-$1');
-    } else if (data.length == 12) {
-      data = data.replace(/(.{4})$/, '-$1');
-    } else if (data.length > 12) {
-      data = data.replace(/(.{4})$/, '-$1');
+    if (data.length > 9 && data.length <= 13) {
+      data = data.replace(/(.{9})(\d)/, '$1-$2');
+    } else if (data.length > 13) {
+      data = data.replace(/(.{10})(\d)/, '$1-$2');
     }
     return data;
   }
